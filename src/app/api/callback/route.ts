@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       Authorization:
         "Basic " +
         Buffer.from(
-          `${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}:${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET}`
+          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
         ).toString("base64"),
       "Content-Type": "application/x-www-form-urlencoded",
     },
