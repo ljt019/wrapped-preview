@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import TopArtist from "./TopArtist";
 
 interface Artist {
   id: string;
   name: string;
   images: { url: string }[];
+  genres: string[];
 }
 
 interface TopArtistsProps {
@@ -20,30 +15,12 @@ interface TopArtistsProps {
 const TopArtists: React.FC<TopArtistsProps> = ({ artists }) => {
   return (
     <div>
-      <h2>Top 5 Artists:</h2>
-      <ol>
-        {artists.map((artist) => (
-          <li key={artist.id}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{artist.name}</CardTitle>
-                <CardDescription>1000 Hours Listened</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {artist.images[0] && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={artist.images[0].url}
-                    alt={artist.name}
-                    width="50"
-                    height="50"
-                  />
-                )}
-              </CardContent>
-            </Card>
-          </li>
+      <h2 className="text-2xl text-center py-4 pl-16">Top 5 Artists</h2>
+      <div className="gap-y-4 flex flex-col items-center">
+        {artists.map((artist, index) => (
+          <TopArtist key={artist.id} artist={artist} number={index + 1} />
         ))}
-      </ol>
+      </div>
     </div>
   );
 };

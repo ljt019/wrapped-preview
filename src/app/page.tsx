@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
 import UserInfo from "../components/UserInfo";
 import TopArtists from "../components/TopArtists";
+import LoginWithSpotify from "../components/LoginWithSpotify";
 
 interface Artist {
   id: string;
   name: string;
   images: { url: string }[];
+  genres: string[];
 }
 
 interface UserInfoData {
@@ -63,7 +64,7 @@ export default function Home() {
   return (
     <div>
       {!accessToken ? (
-        <Link href="/api/login">Login with Spotify</Link>
+        <LoginWithSpotify />
       ) : (
         <div>
           {userInfo && (
@@ -72,7 +73,13 @@ export default function Home() {
               imageUrl={userInfo.images[0]?.url}
             />
           )}
-          {topArtists.length > 0 && <TopArtists artists={topArtists} />}
+          <div>
+            {topArtists.length > 0 && (
+              <div>
+                <TopArtists artists={topArtists} />
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
