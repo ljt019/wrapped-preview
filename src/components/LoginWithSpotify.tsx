@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 function LoginWithSpotify() {
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen px-4 lg:px-0">
       <Card className="rounded-[0.5rem]">
         <CardHeader>
           <CardTitle>Login with Spotify</CardTitle>
