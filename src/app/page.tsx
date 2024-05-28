@@ -27,8 +27,14 @@ export default function Home() {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("access_token");
     if (token) {
+      window.localStorage.setItem("accessToken", token);
       setAccessToken(token);
       window.history.replaceState(null, "", window.location.pathname);
+    } else {
+      const storedToken = window.localStorage.getItem("accessToken");
+      if (storedToken) {
+        setAccessToken(storedToken);
+      }
     }
 
     if (accessToken) {
