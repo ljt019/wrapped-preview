@@ -8,9 +8,12 @@ import { useTopArtistsQuery } from "../hooks/useTopArtistsQuery";
 
 export default function Home() {
   const accessToken = useAccessToken();
-  const { data: topArtists, isError, error } = useTopArtistsQuery(accessToken);
-
-  const isLoading = true;
+  const {
+    data: topArtists,
+    isLoading,
+    isError,
+    error,
+  } = useTopArtistsQuery(accessToken);
 
   if (isError) {
     return <div>{error.message}</div>;
