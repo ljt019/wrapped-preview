@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import Image from "next/image";
 
 interface Artist {
   id: string;
@@ -21,30 +20,6 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
-  const fetchUserData = useCallback(async () => {
-    try {
-      const response = await axios.get("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      });
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  }, [accessToken]);
-
-  const fetchTopArtists = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `/api/top-artists?access_token=${accessToken}`
-      );
-      setTopArtists(response.data.items);
-    } catch (error) {
-      console.error("Error fetching top artists", error);
-    }
-  }, [accessToken]);
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("access_token");
@@ -57,7 +32,31 @@ export default function Home() {
       fetchUserData();
       fetchTopArtists();
     }
-  }, [accessToken, fetchTopArtists, fetchUserData]);
+  }, [accessToken]);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      setUserInfo(response.data);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
+
+  const fetchTopArtists = async () => {
+    try {
+      const response = await axios.get(
+        `/api/top-artists?access_token=${accessToken}`
+      );
+      setTopArtists(response.data.items);
+    } catch (error) {
+      console.error("Error fetching top artists", error);
+    }
+  };
 
   return (
     <div>
@@ -69,7 +68,7 @@ export default function Home() {
             <div>
               <h1>Welcome, {userInfo.display_name}</h1>
               {userInfo.images[0] && (
-                <Image
+                <img
                   src={userInfo.images[0].url}
                   alt="User Avatar"
                   width="100"
@@ -81,11 +80,11 @@ export default function Home() {
           {topArtists.length > 0 && (
             <div>
               <h2>Top 5 Artists:</h2>
-              <ul>
-                {topArtists.map((artist) => (
+              <ol>
+                {topArtists.map((artist, index) => (
                   <li key={artist.id}>
                     {artist.images[0] && (
-                      <Image
+                      <img
                         src={artist.images[0].url}
                         alt={artist.name}
                         width="50"
@@ -95,7 +94,7 @@ export default function Home() {
                     {artist.name}
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           )}
         </div>
