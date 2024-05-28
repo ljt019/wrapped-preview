@@ -38,6 +38,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ artist }) => {
                 width="250"
                 height="250"
                 className="rounded-[0.5rem]"
+                priority={true}
               />
             </div>
           )}
