@@ -4,10 +4,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 
+interface Artist {
+  id: string;
+  name: string;
+  images: { url: string }[];
+}
+
+interface UserInfo {
+  display_name: string;
+  images: { url: string }[];
+}
+
 export default function Home() {
-  const [accessToken, setAccessToken] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
-  const [topArtists, setTopArtists] = useState([]);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -21,7 +32,7 @@ export default function Home() {
       fetchUserData();
       fetchTopArtists();
     }
-  }, [accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [accessToken]);
 
   const fetchUserData = async () => {
     try {
@@ -56,12 +67,14 @@ export default function Home() {
           {userInfo && (
             <div>
               <h1>Welcome, {userInfo.display_name}</h1>
-              <img
-                src={userInfo.images[0]?.url}
-                alt="User Avatar"
-                width="100"
-                height="100"
-              />
+              {userInfo.images[0] && (
+                <img
+                  src={userInfo.images[0].url}
+                  alt="User Avatar"
+                  width="100"
+                  height="100"
+                />
+              )}
             </div>
           )}
           {topArtists.length > 0 && (
@@ -70,12 +83,14 @@ export default function Home() {
               <ul>
                 {topArtists.map((artist) => (
                   <li key={artist.id}>
-                    <img
-                      src={artist.images[0]?.url}
-                      alt={artist.name}
-                      width="50"
-                      height="50"
-                    />
+                    {artist.images[0] && (
+                      <img
+                        src={artist.images[0].url}
+                        alt={artist.name}
+                        width="50"
+                        height="50"
+                      />
+                    )}
                     {artist.name}
                   </li>
                 ))}

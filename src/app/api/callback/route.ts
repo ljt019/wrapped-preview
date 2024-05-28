@@ -1,9 +1,13 @@
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import querystring from "querystring";
 
-export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const code = url.searchParams.get("code");
+export async function GET(req: NextRequest) {
+  const code = req.nextUrl.searchParams.get("code");
+
+  if (!code) {
+    return NextResponse.json({ error: "Code not found" }, { status: 400 });
+  }
 
   const authOptions = {
     url: "https://accounts.spotify.com/api/token",
@@ -12,9 +16,7 @@ export async function GET(req: Request) {
       Authorization:
         "Basic " +
         Buffer.from(
-          process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID +
-            ":" +
-            process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
+          `${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}:${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET}`
         ).toString("base64"),
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -29,13 +31,15 @@ export async function GET(req: Request) {
     const response = await axios(authOptions);
     const { access_token, refresh_token } = response.data;
 
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: `/?access_token=${access_token}&refresh_token=${refresh_token}`,
-      },
-    });
+    const redirectUrl = new URL("/", req.nextUrl.origin);
+    redirectUrl.searchParams.set("access_token", access_token);
+    redirectUrl.searchParams.set("refresh_token", refresh_token);
+
+    return NextResponse.redirect(redirectUrl);
   } catch (error) {
-    return new Response("Failed to authenticate", { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to authenticate" },
+      { status: 500 }
+    );
   }
 }

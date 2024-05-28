@@ -1,6 +1,7 @@
+import { NextRequest, NextResponse } from "next/server";
 import querystring from "querystring";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const scope = "user-read-private user-read-email user-top-read";
   const redirectUri =
     "https://accounts.spotify.com/authorize?" +
@@ -11,8 +12,5 @@ export async function GET(req: Request) {
       redirect_uri: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI,
     });
 
-  return new Response(null, {
-    status: 302,
-    headers: { Location: redirectUri },
-  });
+  return NextResponse.redirect(redirectUri);
 }

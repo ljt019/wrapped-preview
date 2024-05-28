@@ -1,8 +1,15 @@
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const accessToken = url.searchParams.get("access_token");
+export async function GET(req: NextRequest) {
+  const accessToken = req.nextUrl.searchParams.get("access_token");
+
+  if (!accessToken) {
+    return NextResponse.json(
+      { error: "Access token not found" },
+      { status: 400 }
+    );
+  }
 
   try {
     const response = await axios.get(
@@ -18,8 +25,11 @@ export async function GET(req: Request) {
       }
     );
 
-    return new Response(JSON.stringify(response.data), { status: 200 });
+    return NextResponse.json(response.data);
   } catch (error) {
-    return new Response("Failed to fetch top artists", { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch top artists" },
+      { status: 500 }
+    );
   }
 }
