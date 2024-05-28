@@ -76,7 +76,7 @@ export default function Home() {
       {!accessToken ? (
         <LoginWithSpotify />
       ) : (
-        <div>
+        <div className="pb-4">
           {topArtists.length > 0 && <TopArtists artists={topArtists} />}
         </div>
       )}
