@@ -24,8 +24,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ artist, number }) => {
   const genres = artist.genres.join(", ");
 
   return (
-    <div className="flex items-center w-[25%] h-[35%]">
-      <span className="pr-4 text-[4rem] w-[5rem]">{number}.</span>
+    <div className="flex items-center lg:w-[25%] lg:h-[35%]">
       <Card className="w-full h-full">
         <CardHeader className="text-center">
           <CardTitle>{artist.name}</CardTitle>

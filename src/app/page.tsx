@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import UserInfo from "../components/UserInfo";
 import TopArtists from "../components/TopArtists";
 import LoginWithSpotify from "../components/LoginWithSpotify";
 
@@ -78,12 +77,6 @@ export default function Home() {
         <LoginWithSpotify />
       ) : (
         <div>
-          {userInfo && (
-            <UserInfo
-              displayName={userInfo.display_name}
-              imageUrl={userInfo.images[0]?.url}
-            />
-          )}
           {topArtists.length > 0 && <TopArtists artists={topArtists} />}
         </div>
       )}
