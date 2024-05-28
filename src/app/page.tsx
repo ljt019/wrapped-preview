@@ -19,7 +19,6 @@ interface UserInfoData {
 
 export default function Home() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<UserInfoData | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
   useEffect(() => {
@@ -38,27 +37,13 @@ export default function Home() {
         setAccessToken(storedToken);
       }
     }
-  }, []);
+  }, [accessToken]);
 
   useEffect(() => {
     if (accessToken) {
-      fetchUserData();
       fetchTopArtists();
     }
   }, [accessToken]);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      });
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error("Error fetching user data", error);
-    }
-  };
 
   const fetchTopArtists = async () => {
     try {
