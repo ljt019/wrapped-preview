@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import UserInfo from "../components/UserInfo";
+import TopArtists from "../components/TopArtists";
 
 interface Artist {
   id: string;
@@ -10,14 +12,14 @@ interface Artist {
   images: { url: string }[];
 }
 
-interface UserInfo {
+interface UserInfoData {
   display_name: string;
   images: { url: string }[];
 }
 
 export default function Home() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfoData | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
   useEffect(() => {
@@ -65,38 +67,12 @@ export default function Home() {
       ) : (
         <div>
           {userInfo && (
-            <div>
-              <h1>Welcome, {userInfo.display_name}</h1>
-              {userInfo.images[0] && (
-                <img
-                  src={userInfo.images[0].url}
-                  alt="User Avatar"
-                  width="100"
-                  height="100"
-                />
-              )}
-            </div>
+            <UserInfo
+              displayName={userInfo.display_name}
+              imageUrl={userInfo.images[0]?.url}
+            />
           )}
-          {topArtists.length > 0 && (
-            <div>
-              <h2>Top 5 Artists:</h2>
-              <ol>
-                {topArtists.map((artist, index) => (
-                  <li key={artist.id}>
-                    {artist.images[0] && (
-                      <img
-                        src={artist.images[0].url}
-                        alt={artist.name}
-                        width="50"
-                        height="50"
-                      />
-                    )}
-                    {artist.name}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
+          {topArtists.length > 0 && <TopArtists artists={topArtists} />}
         </div>
       )}
     </div>
