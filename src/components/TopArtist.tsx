@@ -17,27 +17,29 @@ interface Artist {
 
 interface TopArtistProps {
   artist: Artist;
-  number: number;
 }
 
-const TopArtist: React.FC<TopArtistProps> = ({ artist, number }) => {
+const TopArtist: React.FC<TopArtistProps> = ({ artist }) => {
   const genres = artist.genres.join(", ");
 
   return (
-    <div className="flex items-center lg:w-[25%] lg:h-[35%]">
-      <Card className="w-full h-full">
+    <div className="flex items-center justify-center w-[80%] lg:w-[25%] lg:h-[35%]">
+      <Card className="h-full w-full rounded-[0.5rem]">
         <CardHeader className="text-center">
           <CardTitle>{artist.name}</CardTitle>
           <CardDescription>{genres}</CardDescription>
         </CardHeader>
         <CardContent className="justify-center flex">
           {artist.images[0] && (
-            <Image
-              src={artist.images[0].url}
-              alt={artist.name}
-              width="175"
-              height="175"
-            />
+            <div>
+              <Image
+                src={artist.images[0].url}
+                alt={artist.name}
+                width="250"
+                height="250"
+                className="rounded-[0.5rem]"
+              />
+            </div>
           )}
         </CardContent>
       </Card>

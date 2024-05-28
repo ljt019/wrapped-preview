@@ -1,57 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
 import TopArtists from "../components/TopArtists";
+import { TopArtistsLoading } from "../components/TopArtists";
 import LoginWithSpotify from "../components/LoginWithSpotify";
-
-interface Artist {
-  id: string;
-  name: string;
-  images: { url: string }[];
-  genres: string[];
-}
+import { useAccessToken } from "../hooks/useAccessToken";
+import { useTopArtistsQuery } from "../hooks/useTopArtistsQuery";
 
 export default function Home() {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [topArtists, setTopArtists] = useState<Artist[]>([]);
+  const accessToken = useAccessToken();
+  const { data: topArtists, isError, error } = useTopArtistsQuery(accessToken);
 
-  // Effect to handle token initialization
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("access_token");
-    console.log("Token from URL:", token);
+  const isLoading = true;
 
-    if (token) {
-      window.localStorage.setItem("accessToken", token);
-      setAccessToken(token);
-      window.history.replaceState(null, "", window.location.pathname);
-    } else {
-      const storedToken = window.localStorage.getItem("accessToken");
-      console.log("Token from localStorage:", storedToken);
-      if (storedToken) {
-        setAccessToken(storedToken);
-      }
-    }
-  }, []); // Run only on mount
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
 
-  // Effect to fetch data once accessToken is available
-  useEffect(() => {
-    if (accessToken) {
-      fetchTopArtists();
-    }
-  }, [accessToken]);
-
-  const fetchTopArtists = async () => {
-    try {
-      const response = await axios.get(
-        `/api/top-artists?access_token=${accessToken}`
-      );
-      setTopArtists(response.data.items);
-    } catch (error) {
-      console.error("Error fetching top artists", error);
-    }
-  };
+  if (isLoading) {
+    return <TopArtistsLoading />;
+  }
 
   return (
     <div>
@@ -59,7 +26,7 @@ export default function Home() {
         <LoginWithSpotify />
       ) : (
         <div className="pb-6">
-          {topArtists.length > 0 && <TopArtists artists={topArtists} />}
+          {topArtists && <TopArtists artists={topArtists} />}
         </div>
       )}
     </div>
