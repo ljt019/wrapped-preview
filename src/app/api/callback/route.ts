@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     redirectUrl.searchParams.set("access_token", access_token);
     redirectUrl.searchParams.set("refresh_token", refresh_token);
 
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(redirectUrl.toString());
   } catch (error) {
     const axiosError = error as AxiosError;
 

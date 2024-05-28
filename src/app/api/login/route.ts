@@ -1,4 +1,3 @@
-// pages/api/login.ts
 import { NextRequest, NextResponse } from "next/server";
 import querystring from "querystring";
 

@@ -79,13 +79,7 @@ export default function Home() {
               imageUrl={userInfo.images[0]?.url}
             />
           )}
-          <div>
-            {topArtists.length > 0 && (
-              <div>
-                <TopArtists artists={topArtists} />
-              </div>
-            )}
-          </div>
+          {topArtists.length > 0 && <TopArtists artists={topArtists} />}
         </div>
       )}
     </div>
