@@ -21,7 +21,7 @@ export default function Home() {
       fetchUserData();
       fetchTopArtists();
     }
-  }, [accessToken]);
+  }, [accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserData = async () => {
     try {
