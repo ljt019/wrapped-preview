@@ -12,15 +12,11 @@ interface Artist {
   genres: string[];
 }
 
-interface UserInfoData {
-  display_name: string;
-  images: { url: string }[];
-}
-
 export default function Home() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
 
+  // Effect to handle token initialization
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("access_token");
@@ -37,8 +33,9 @@ export default function Home() {
         setAccessToken(storedToken);
       }
     }
-  }, [accessToken]);
+  }, []); // Run only on mount
 
+  // Effect to fetch data once accessToken is available
   useEffect(() => {
     if (accessToken) {
       fetchTopArtists();
