@@ -72,13 +72,15 @@ const TopArtist: React.FC<TopArtistProps> = ({ artist, tracks }) => {
             </div>
           )}
         </CardContent>
-        <CardFooter className="text-center flex items-center justify-center">
+        <CardFooter className="text-center flex flex-col items-center justify-center">
           {top3Tracks.length > 0 ? (
-            <ul>
-              {top3Tracks.map((track) => (
-                <li key={track.id}>{track.name}</li>
-              ))}
-            </ul>
+            <>
+              <ul className="text-muted-foreground text-sm">
+                {top3Tracks.map((track) => (
+                  <li key={track.id}>{track.name}</li>
+                ))}
+              </ul>
+            </>
           ) : (
             <p>No tracks found</p>
           )}
