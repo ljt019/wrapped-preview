@@ -1,13 +1,6 @@
 import React from "react";
 import TopArtist from "./TopArtist";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 
 interface Artist {
   id: string;
@@ -16,11 +9,18 @@ interface Artist {
   genres: string[];
 }
 
-interface TopArtistsProps {
-  artists: Artist[];
+interface Track {
+  artists: string[];
+  id: string;
+  name: string;
 }
 
-const TopArtists: React.FC<TopArtistsProps> = ({ artists }) => {
+interface TopArtistsProps {
+  artists: Artist[];
+  tracks: Track[];
+}
+
+const TopArtists: React.FC<TopArtistsProps> = ({ artists, tracks }) => {
   return (
     <div>
       <div className="flex flex-col py-4 text-center">
@@ -31,7 +31,7 @@ const TopArtists: React.FC<TopArtistsProps> = ({ artists }) => {
       </div>
       <div className="gap-y-4 flex flex-col items-center">
         {artists.map((artist, index) => (
-          <TopArtist key={artist.id} artist={artist} />
+          <TopArtist key={artist.id} artist={artist} tracks={tracks} />
         ))}
       </div>
     </div>
