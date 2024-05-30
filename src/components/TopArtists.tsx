@@ -9,8 +9,12 @@ interface Artist {
   genres: string[];
 }
 
+interface ArtistInTrack {
+  name: string;
+}
+
 interface Track {
-  artists: string[];
+  artists: ArtistInTrack[];
   id: string;
   name: string;
 }

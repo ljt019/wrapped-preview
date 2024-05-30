@@ -16,13 +16,15 @@ interface Artist {
   genres: string[];
 }
 
-interface Track {
-  artists: string[];
-  id: string;
+interface ArtistInTrack {
   name: string;
 }
 
-interface TrackArtist {}
+interface Track {
+  artists: ArtistInTrack[];
+  id: string;
+  name: string;
+}
 
 interface TopArtistProps {
   artist: Artist;
