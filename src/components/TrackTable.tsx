@@ -30,7 +30,7 @@ export function TrackTable({ accessToken }: { accessToken: string }) {
           <TableHead>Number</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Artists</TableHead>
-          <TableHead>Album</TableHead>
+          <TableHead className="hidden sm:table-cell">Album</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,7 +41,9 @@ export function TrackTable({ accessToken }: { accessToken: string }) {
             <TableCell>
               {track.artists.map((artist) => artist.name).join(", ")}
             </TableCell>
-            <TableCell>{track.album.name}</TableCell>
+            <TableCell className="hidden sm:table-cell">
+              {track.album.name}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
