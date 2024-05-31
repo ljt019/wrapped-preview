@@ -14,12 +14,10 @@ export default function Top100Tracks() {
 
   const {
     data: topTracks,
-    isLoading,
+    isLoading: isLoadingTopTracks,
     isError: isErrorTopTracks,
     error: errorTopTracks,
   } = useTopTracksQuery(accessToken);
-
-  const isLoadingTopTracks = true;
 
   if (isErrorTopTracks) {
     return <div>{errorTopTracks?.message}</div>;
