@@ -8,7 +8,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 function LoginWithSpotify() {
   return (
@@ -29,13 +28,10 @@ function LoginWithSpotify() {
 }
 
 function LoginLink() {
-  const router = useRouter();
-
   return (
-    // <Link href="/api/login">
+  <Link href="/api/login">
     <Button
       className="rounded-[0.7rem] items-center flex justify-between w-full bg-black text-white"
-      onClick={() => router.push("/api/login")}
     >
       <div style={{ flex: 1 }}>
         <Image
@@ -50,7 +46,7 @@ function LoginLink() {
       </div>
       <div style={{ flex: 1 }}></div>
     </Button>
-    // </Link>
+  </Link>
   );
 }
 
