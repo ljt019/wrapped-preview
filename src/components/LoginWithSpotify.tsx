@@ -8,6 +8,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 function LoginWithSpotify() {
   return (
@@ -28,23 +29,28 @@ function LoginWithSpotify() {
 }
 
 function LoginLink() {
+  const router = useRouter();
+
   return (
-    <Link href="/api/login">
-      <Button className="rounded-[0.7rem] items-center flex justify-between w-full bg-black text-white">
-        <div style={{ flex: 1 }}>
-          <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/800px-Spotify_logo_without_text.svg.png"
-            alt="Spotify Logo"
-            width="24"
-            height="24"
-          />
-        </div>
-        <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          Login
-        </div>
-        <div style={{ flex: 1 }}></div>
-      </Button>
-    </Link>
+    // <Link href="/api/login">
+    <Button
+      className="rounded-[0.7rem] items-center flex justify-between w-full bg-black text-white"
+      onClick={() => router.push("/api/login")}
+    >
+      <div style={{ flex: 1 }}>
+        <Image
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/800px-Spotify_logo_without_text.svg.png"
+          alt="Spotify Logo"
+          width="24"
+          height="24"
+        />
+      </div>
+      <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        Login
+      </div>
+      <div style={{ flex: 1 }}></div>
+    </Button>
+    // </Link>
   );
 }
 
