@@ -6,6 +6,7 @@ import LoginWithSpotify from "../components/LoginWithSpotify";
 import { useAccessToken } from "../hooks/useAccessToken";
 import { useTopArtistsQuery } from "../hooks/useTopArtistsQuery";
 import { useTopTracksQuery } from "../hooks/useTopTracksQuery";
+import { TrackTable } from "../components/TrackTable";
 
 export default function Home() {
   const accessToken = useAccessToken();
@@ -43,9 +44,14 @@ export default function Home() {
       {!accessToken ? (
         <LoginWithSpotify />
       ) : (
-        <div className="pb-6">
-          {topArtists && <TopArtists artists={topArtists} tracks={topTracks} />}
-        </div>
+        <>
+          <div className="pb-6">
+            {topArtists && (
+              <TopArtists artists={topArtists} tracks={topTracks} />
+            )}
+          </div>
+          <TrackTable accessToken={accessToken} />
+        </>
       )}
     </div>
   );

@@ -8,23 +8,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Image from "next/image";
-
-interface Artist {
-  id: string;
-  name: string;
-  images: { url: string }[];
-  genres: string[];
-}
-
-interface ArtistInTrack {
-  name: string;
-}
-
-interface Track {
-  artists: ArtistInTrack[];
-  id: string;
-  name: string;
-}
+import type { Artist, Track } from "@/types/types";
 
 interface TopArtistProps {
   artist: Artist;
