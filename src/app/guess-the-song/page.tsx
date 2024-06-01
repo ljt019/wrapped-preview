@@ -85,11 +85,12 @@ export default function GuessTheSong() {
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center">
-              <p>Track Position: {randomTrackIndex}</p>
-              <p>
-                Artist(s):{" "}
-                {randomTrack.artists.map((artist) => artist.name).join(", ")}
-              </p>
+              {randomTrack.preview_url && (
+                <audio controls>
+                  <source src={randomTrack.preview_url} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              )}
             </CardContent>
             <CardFooter className="flex flex-col space-y-4 justify-center items-center">
               <Input
