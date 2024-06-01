@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useAccessToken } from "@/hooks/useAccessToken";
-import { useTopTracksQuery } from "@/hooks/useTopTracksQuery";
+import { useOneDirectionTracksQuery } from "@/hooks/useOneDirectionTracksQuery";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,13 +23,14 @@ export default function GuessTheSong() {
     data: topTracks,
     isLoading: isLoadingTopTracks,
     isError: isErrorTopTracks,
-  } = useTopTracksQuery(accessToken);
+  } = useOneDirectionTracksQuery(accessToken);
 
   const [trackGuess, setTrackGuess] = useState<string>("");
   const [randomTrack, setRandomTrack] = useState<Track | null>(null);
   const [randomTrackIndex, setRandomTrackIndex] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [score, setScore] = useState<number>(0); // New state for the score
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
@@ -71,6 +72,7 @@ export default function GuessTheSong() {
       trackGuess.toLowerCase() === randomTrack.name.toLowerCase()
     ) {
       setIsCorrect(true);
+      setScore(score + 1); // Increment score on correct guess
     } else {
       setIsCorrect(false);
     }
@@ -88,6 +90,7 @@ export default function GuessTheSong() {
     setTrackGuess(randomTrack?.name || "");
     handleGuessSubmit();
     setIsCorrect(true);
+    setScore(0); // Reset score on give up
   };
 
   const handlePlayPause = () => {
@@ -170,6 +173,8 @@ export default function GuessTheSong() {
               )}
             </CardContent>
             <CardFooter className="flex flex-col space-y-4 justify-center items-center">
+              <p className="text-lg font-bold">Score: {score}</p>{" "}
+              {/* Display the score */}
               <Input
                 type="text"
                 value={trackGuess}
