@@ -6,7 +6,6 @@ import LoginWithSpotify from "../components/LoginWithSpotify";
 import { useAccessToken } from "../hooks/useAccessToken";
 import { useTopArtistsQuery } from "../hooks/useTopArtistsQuery";
 import { useTopTracksQuery } from "../hooks/useTopTracksQuery";
-import { TrackTable } from "../components/TrackTable";
 
 export default function Home() {
   const accessToken = useAccessToken();
@@ -50,7 +49,6 @@ export default function Home() {
               <TopArtists artists={topArtists} tracks={topTracks} />
             )}
           </div>
-          <TrackTable accessToken={accessToken} />
         </>
       )}
     </div>
