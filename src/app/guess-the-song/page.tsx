@@ -49,6 +49,15 @@ export default function GuessTheSong() {
     setCurrentTime(0);
   };
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.src = randomTrack?.preview_url || "";
+      setCurrentTime(0);
+    }
+  }, [randomTrack]);
+
   const handleGuessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTrackGuess(event.target.value);
     if (isCorrect !== null) {
@@ -85,14 +94,6 @@ export default function GuessTheSong() {
       setIsPlaying(!isPlaying);
     }
   };
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      setCurrentTime(0);
-    }
-  }, [randomTrack]);
 
   useEffect(() => {
     if (audioRef.current) {
