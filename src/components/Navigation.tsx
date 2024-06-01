@@ -31,6 +31,17 @@ export default function Navigation() {
       >
         Top 100 Tracks
       </Button>
+      <Button
+        variant="link"
+        className={
+          isActive("/guess-the-song")
+            ? "text-foreground"
+            : "text-muted-foreground"
+        }
+        onClick={() => router.push("/guess-the-song")}
+      >
+        Guess the Song
+      </Button>
     </>
   );
 }
