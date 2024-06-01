@@ -13,7 +13,7 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, X } from "lucide-react";
 
 import type { Track } from "@/types/types";
 
@@ -82,6 +82,12 @@ export default function GuessTheSong() {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
+  };
+
+  const giveUp = () => {
+    setTrackGuess(randomTrack?.name || "");
+    handleGuessSubmit();
+    setIsCorrect(true);
   };
 
   const handlePlayPause = () => {
@@ -186,12 +192,21 @@ export default function GuessTheSong() {
                   Reset
                 </Button>
               ) : (
-                <Button
-                  onClick={handleGuessSubmit}
-                  className="rounded-[0.5rem] w-1/2"
-                >
-                  Submit Guess
-                </Button>
+                <>
+                  <Button
+                    onClick={handleGuessSubmit}
+                    className="rounded-[0.5rem] w-1/2"
+                  >
+                    Submit Guess
+                  </Button>
+                  <Button
+                    onClick={giveUp}
+                    className="rounded-[0.5rem] w-1/4 text-red-500"
+                    variant="ghost"
+                  >
+                    <X />
+                  </Button>
+                </>
               )}
             </CardFooter>
           </Card>
